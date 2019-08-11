@@ -14,10 +14,11 @@ pipeline {
         }
         steps {
             script {
-                app = docker.withServer('tcp://192.168.11.74:2375')
-                app = docker.build("toyhoshi/train-schedule")
-                app.inside {
-                    sh 'echo $(curl localhost:8080)'
+                docker.withServer('tcp://192.168.11.74:2375') {
+                    app = docker.build("toyhoshi/train-schedule")
+                    app.inside {
+                        sh 'echo $(curl localhost:8080)'
+                    }
                 }
             }
         }
